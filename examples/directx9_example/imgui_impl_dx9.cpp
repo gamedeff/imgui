@@ -13,21 +13,16 @@
 //-----------------------------------------------------------------------------------
 #ifdef _DEBUG
 //#     if D3D9_SDK_VERSION >= 32
-#               define GW_D3DX9_LIB "d3dx9d.lib"
+#               define IMGUI_D3DX9_LIB "d3dx9d.lib"
 //#     else
-//#             define GW_D3DX9_LIB "d3dx9dt.lib"
+//#             define IMGUI_D3DX9_LIB "d3dx9dt.lib"
 //#     endif
 #else
-#       define GW_D3DX9_LIB "d3dx9.lib"
+#       define IMGUI_D3DX9_LIB "d3dx9.lib"
 #endif
 //-----------------------------------------------------------------------------------
-#pragma message("Linking with " GW_D3DX9_LIB "...")
-#pragma comment(lib, GW_D3DX9_LIB)
-//-----------------------------------------------------------------------------------
-//#define DIRECTINPUT_VERSION 0x0800
-//#include <dinput.h>
-//#pragma message("Linking with " "dinput8.lib" "...")
-//#pragma comment(lib, "dinput8.lib")
+#pragma message("Linking with " IMGUI_D3DX9_LIB "...")
+#pragma comment(lib, IMGUI_D3DX9_LIB)
 //-----------------------------------------------------------------------------------
 
 // Data
