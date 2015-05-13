@@ -174,6 +174,10 @@ void ImGui_ImplGlfwGL3_CreateFontsTexture()
 
     // Store our identifier
     io.Fonts->TexID = (void *)(intptr_t)g_FontTexture;
+
+    // Cleanup (don't clear the input data if you want to append new fonts later)
+    io.Fonts->ClearInputData();
+    io.Fonts->ClearTexData();
 }
 
 bool ImGui_ImplGlfwGL3_CreateDeviceObjects()
@@ -354,7 +358,7 @@ void ImGui_ImplGlfwGL3_NewFrame()
     io.MouseWheel = g_MouseWheel;
     g_MouseWheel = 0.0f;
 
-    // Hide/show hardware mouse cursor
+    // Hide OS mouse cursor if ImGui is drawing it
     glfwSetInputMode(g_Window, GLFW_CURSOR, io.MouseDrawCursor ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL);
 
     // Start the frame

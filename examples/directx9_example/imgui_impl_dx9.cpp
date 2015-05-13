@@ -240,6 +240,10 @@ static void ImGui_ImplDX9_CreateFontsTexture()
 
     // Store our identifier
     io.Fonts->TexID = (void *)pTexture;
+
+    // Cleanup (don't clear the input data if you want to append new fonts later)
+    io.Fonts->ClearInputData();
+    io.Fonts->ClearTexData();
 }
 
 bool ImGui_ImplDX9_CreateDeviceObjects()
@@ -296,6 +300,9 @@ void ImGui_ImplDX9_NewFrame()
     // io.MousePos : filled by WM_MOUSEMOVE events
     // io.MouseDown : filled by WM_*BUTTON* events
     // io.MouseWheel : filled by WM_MOUSEWHEEL events
+
+    // Hide OS mouse cursor if ImGui is drawing it
+    SetCursor(io.MouseDrawCursor ? NULL : LoadCursor(NULL, IDC_ARROW));
 
     // Start the frame
     ImGui::NewFrame();
