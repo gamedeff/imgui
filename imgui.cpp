@@ -7183,6 +7183,11 @@ bool ImGui::ListBox(const char* label, int* current_item, const char** items, in
 
 bool ImGui::ListBox(const char* label, int* current_item, bool (*items_getter)(void*, int, const char**), void* data, int items_count, int height_in_items)
 {
+	return ListBox(label, current_item, items_getter, 0, 0, 0, 0, data, items_count, height_in_items);
+}
+
+bool ImGui::ListBox(const char* label, int* current_item, bool (*items_getter)(void*, int, const char**), void* data, bool (*items_styler_begin)(void*, int), void* items_styler_begin_data, bool (*items_styler_end)(void*, int), void* items_styler_end_data, int items_count, int height_in_items)
+{
 	ImGuiState& g = *GImGui;
 	ImGuiWindow* window = GetCurrentWindow();
 	if (window->SkipItems)
@@ -7205,7 +7210,7 @@ bool ImGui::ListBox(const char* label, int* current_item, bool (*items_getter)(v
 				*current_item = 0;
 
 			value_changed = true;
-			ImGui::SetScrollPosHere(); // not figured out how to it yet
+			ImGui::SetScrollPosHere(); // not figured out how to do it yet
 		}
 		else if(IsKeyPressedMap(ImGuiKey_UpArrow))
 		{
@@ -7215,7 +7220,7 @@ bool ImGui::ListBox(const char* label, int* current_item, bool (*items_getter)(v
 				*current_item = items_count - 1;
 
 			value_changed = true;
-			ImGui::SetScrollPosHere(); // not figured out how to it yet
+			ImGui::SetScrollPosHere(); // not figured out how to do it yet
 		}
 	}
 
@@ -7227,11 +7232,19 @@ bool ImGui::ListBox(const char* label, int* current_item, bool (*items_getter)(v
             item_text = "*Unknown item*";
 
         ImGui::PushID(i);
+
+		if(items_styler_begin)
+			items_styler_begin(items_styler_begin_data, i);
+
         if (ImGui::Selectable(item_text, item_selected))
         {
             *current_item = i;
             value_changed = true;
         }
+
+		if(items_styler_end)
+			items_styler_end(items_styler_end_data, i);
+
         ImGui::PopID();
     }
 
